@@ -1,0 +1,162 @@
+/ {
+
+#if CONFIG_HCT_DEVICE_INFO_SUPPORT
+hct_device: hct_device{
+	compatible				= "mediatek,hct_devices";
+};
+#endif
+
+	cust_accel@mxc400x {
+		compatible				= "mediatek,cust_mxc400x";
+		i2c_num				    = <__HCT_GSENSOR_I2C_BUS_NUM__>;
+		i2c_addr				= <__HCT__MXC400X_SENSOR_ADDR__ 0 0 0>;
+		direction				= <__HCT__MXC400X_SENSOR_DIRECTION__>;
+		power_id				= <0xffff>;
+		power_vol				= <0>;
+		firlen					= <0>;
+		is_batch_supported		= <__HCT__MXC400X_SENSOR_BATCH_SUPPORT__>;
+	};
+};
+
+/*add by zhuguanglei begin */
+
+&i2c1 {
+#if CONFIG_MTK_MXC400X_NEW
+	gsensor@__HCT__MXC400X_SENSOR_ADDR__ {
+		compatible = "mediatek,mxc400x";
+		reg = <__HCT__MXC400X_SENSOR_ADDR__>;
+		status = "okay";
+	};
+#endif
+};
+&i2c3 {
+#ifdef __HCT_MTK_KTD2151__
+          lcd@ktd2151 {
+                  compatible = "mediatek,I2C_LCD_BIAS";
+                  reg = <0x3e>;
+                  status = "okay";
+          };
+#endif
+
+};
+
+#ifdef CONFIG_MTK_FLASHLIGHT_AW3641
+
+&pio {
+	flashlights_aw3641_pin_default: aw3641_pin_default{
+	};
+
+	flashlights_aw3641_en_high: aw3641_en@1 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_AW3641_EN_PIN__>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+	flashlights_aw3641_en_low: aw3641_en@0 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_AW3641_EN_PIN__>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+	flashlights_aw3641_mode_high: aw3641_mode@1 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_AW3641_MODE_PIN__>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+	flashlights_aw3641_mode_low: aw3641_mode@0 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_AW3641_MODE_PIN__>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+#if defined(__HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__)
+#if __HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__
+	flashlights_main_gpio_en_high: main_gpio_en@1 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_MAIN_GPIO_EN_PIN__>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+	flashlights_main_gpio_en_low: main_gpio_en@0 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_MAIN_GPIO_EN_PIN__>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+#endif
+#endif
+};
+
+/{
+	flashlights_aw3641_dev {
+		compatible = "mediatek,flashlights_aw3641";
+		pinctrl-names = "default", "aw3641_en_high", "aw3641_en_low", "aw3641_mode_high", "aw3641_mode_low"
+#if defined(__HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__)
+#if __HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__
+	,"main_gpio_en_high", "main_gpio_en_low"
+#endif
+#endif
+	;
+		pinctrl-0 = <&flashlights_aw3641_pin_default>;
+		pinctrl-1 = <&flashlights_aw3641_en_high>;
+		pinctrl-2 = <&flashlights_aw3641_en_low>;
+		pinctrl-3 = <&flashlights_aw3641_mode_high>;
+		pinctrl-4 = <&flashlights_aw3641_mode_low>;
+#if defined(__HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__)
+#if __HCT_TRUE_FALSE_FLASHLIGHT_SUPPORT__
+	pinctrl-5 = <&flashlights_main_gpio_en_high>;
+	pinctrl-6 = <&flashlights_main_gpio_en_low>;
+#endif
+#endif
+		aw3641_en_gpio = <&pio __HCT_FLASHLIGHT_AW3641_EN_GPIO__ 0>;
+		status = "okay";
+	};
+};
+#endif
+
+#ifdef CONFIG_MTK_FLASHLIGHT_SUB_GPIO
+&pio {
+	flashlights_sub_gpio_pin_default: sub_gpio_pin_default{
+	};
+
+	flashlights_sub_gpio_en_high: sub_gpio_en@1 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_SUB_GPIO_EN_PIN__>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+	flashlights_sub_gpio_en_low: sub_gpio_en@0 {
+	    pins_cmd_dat {
+			pins = <__HCT_FLASHLIGHT_SUB_GPIO_EN_PIN__>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+};
+
+/{
+	flashlights_sub_gpio_dev {
+		compatible = "mediatek,flashlights_sub_gpio";
+		pinctrl-names = "default", "sub_gpio_en_high", "sub_gpio_en_low";
+		pinctrl-0 = <&flashlights_sub_gpio_pin_default>;
+		pinctrl-1 = <&flashlights_sub_gpio_en_high>;
+		pinctrl-2 = <&flashlights_sub_gpio_en_low>;
+		status = "okay";
+	};
+};
+#endif
+&otg_iddig {
+#if __HCT_USB_MTK_OTG_SUPPORT__
+	gpio-vbus = <&pio __HCT_USB_VBUS_EN_PIN__ 0x0>;
+#endif
+	status = "okay";
+};
+

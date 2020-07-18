@@ -1,0 +1,22 @@
+#
+# Touchscreen driver configuration
+#
+config TOUCHSCREEN_MTK_FOCALTECH_FT6336U
+    bool "Focaltech Ts for Mediatek"
+    depends on I2C
+    default n
+    help
+      Say Y here if you have Focaltech touch panel.
+      If unsure, say N.
+      
+config TOUCHSCREEN_MTK_FTS_DIRECTORY
+    string "Focaltech ts directory name"
+    default "focaltech_touch"
+    depends on TOUCHSCREEN_MTK_FOCALTECH_FT6336U
+
+## hct-drv add for tpgesture by qhs begin ##
+config HCT_GESTURE_SUPPORT
+        bool "HCT_GESTURE_SUPPORT"
+        default n
+## hct-drv add for tpgesture by qhs end ##
+    
