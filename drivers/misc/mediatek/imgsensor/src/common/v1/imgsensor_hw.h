@@ -17,7 +17,6 @@
 #include "imgsensor_sensor.h"
 #include "imgsensor_cfg_table.h"
 #include "imgsensor_common.h"
-#include <linux/hct_include/hct_project_all_config.h>
 
 enum IMGSENSOR_HW_POWER_STATUS {
 	IMGSENSOR_HW_POWER_STATUS_OFF,

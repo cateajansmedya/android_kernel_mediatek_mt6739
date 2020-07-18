@@ -126,8 +126,6 @@ void vbus_init(void)
 	DBG(0, "---\n");
 
 }
-//hct_drv add for otg begin
-#include <linux/hct_include/hct_project_all_config.h>
 
 #ifdef CONFIG_USB_C_SWITCH
 #ifdef __HCT_USB_C_OTG_EN__
@@ -236,95 +234,6 @@ int get_usbc_otg_gpio(void)
 #endif
 #endif
 
-#if __HCT_USB_MTK_OTG_SUPPORT__
-
-#include <linux/of_gpio.h>
-#include <linux/device.h>
-
-int g_gpio_vbus = 0;
-
-int hct_gpio_vbus(struct device *dev)
-{
-	int ret = 0;
-	struct device_node *np = dev->of_node;
-
-	pr_info("[%s] start..\n", __func__);
-	if (np) {
-		ret = of_get_named_gpio(np, "gpio-vbus", 0);
-		if (ret < 0)
-			pr_err("%s: get vbus GPIO failed (%d)", __func__, ret);
-		else
-			g_gpio_vbus = ret;
-	}
-	else
-		return -1;
-
-	if (gpio_is_valid(g_gpio_vbus))
-			pr_info("gpio number %d is valid\n", g_gpio_vbus);
-
-	if (g_gpio_vbus != 0) {
-		ret = gpio_request(g_gpio_vbus, "gpio-vbus");
-		if (ret) {
-			pr_err("%s : vbus gpio_request failed\n", __func__);
-			return -ENODEV;
-		}
-		pr_info("%s : vbus GPIO = %d\n", __func__, g_gpio_vbus);
-		ret = gpio_direction_output(g_gpio_vbus, 0);
-		if (ret) {
-			pr_err("%s : vbus gpio_direction_output failed\n",  __func__);
-			return -ENODEV;
-		}
-		gpio_set_value(g_gpio_vbus, 0);
-		pr_info("%s : vbus gpio_get_value = %d\n", __func__, gpio_get_value(g_gpio_vbus));
-	}
-	pr_info("[%s] end..\n", __func__);
-	return 0;
-}
-
-int g_gpio_vbus_mcu = 0;
-
-int hct_gpio_vbus_mcu(struct device *dev)
-{
-	int ret = 0;
-	struct device_node *np = dev->of_node;
-
-	pr_info("[%s] start..\n", __func__);
-	if (np) {
-		ret = of_get_named_gpio(np, "gpio-vbus-mcu", 0);
-		if (ret < 0)
-			pr_err("%s: get vbus GPIO failed (%d)", __func__, ret);
-		else
-			g_gpio_vbus_mcu = ret;
-	}
-	else
-		return -1;
-
-	if (gpio_is_valid(g_gpio_vbus_mcu))
-			pr_info("gpio number %d is valid\n", g_gpio_vbus_mcu);
-
-	if (g_gpio_vbus_mcu != 0) {
-		ret = gpio_request(g_gpio_vbus_mcu, "gpio-vbus-mcu");
-		if (ret) {
-			pr_err("%s : vbus gpio_request failed\n", __func__);
-			return -ENODEV;
-		}
-		pr_info("%s : vbus GPIO = %d\n", __func__, g_gpio_vbus_mcu);
-		ret = gpio_direction_output(g_gpio_vbus_mcu, 0);
-		if (ret) {
-			pr_err("%s : vbus gpio_direction_output failed\n",  __func__);
-			return -ENODEV;
-		}
-		gpio_set_value(g_gpio_vbus_mcu, 0);
-		pr_info("%s : vbus gpio_get_value = %d\n", __func__, gpio_get_value(g_gpio_vbus_mcu));
-	}
-	pr_info("[%s] end..\n", __func__);
-	return 0;
-}
-
-
-
-#endif
-//hct_drv add for otg end
 static bool vbus_on;
 module_param(vbus_on, bool, 0644);
 static int vbus_control;
@@ -355,37 +264,12 @@ void _set_vbus(struct musb *musb, int is_on)
 		set_chr_enable_otg(0x1);
 		set_chr_boost_current_limit(1500);
 #endif
-//hct_drv add for otg begin
-#if __HCT_USB_MTK_OTG_SUPPORT__
-		gpio_set_value(g_gpio_vbus, 1);
-		gpio_set_value(g_gpio_vbus_mcu, 1);
-
-		#ifdef CONFIG_USB_C_SWITCH
-			#ifdef __HCT_USB_C_OTG_EN__
-			gpio_set_value(hct_usbc_otg_gpio_num, 0);
-			pr_info("%s : vbus gpio_get_value = %d\n", __func__, gpio_get_value(hct_usbc_otg_gpio_num));
-			gpio_set_value(hct_usbc_otg_gpio_num, 1);
-			pr_info("%s : vbus gpio_get_value = %d\n", __func__, gpio_get_value(hct_usbc_otg_gpio_num));
-			gpio_set_value(hct_usbc_otg_gpio_num, 0);
-			pr_info("%s : vbus gpio_get_value = %d\n", __func__, gpio_get_value(hct_usbc_otg_gpio_num));
-			#endif
-		#endif
-
-#endif
-//hct_drv add for otg end
 	} else if (!is_on && vbus_on) {
 #if CONFIG_MTK_GAUGE_VERSION == 30
 		charger_dev_enable_otg(primary_charger, false);
 #else
 		set_chr_enable_otg(0x0);
 #endif
-//hct_drv add for otg begin
-#if __HCT_USB_MTK_OTG_SUPPORT__
-		gpio_set_value(g_gpio_vbus, 0);
-		gpio_set_value(g_gpio_vbus_mcu, 0);
-#endif
-//hct_drv add for otg end
-
 		/* disable VBUS 1st then update flag to make host mode correct used by PMIC */
 		vbus_on = false;
 	}
@@ -965,12 +849,7 @@ static int otg_iddig_probe(struct platform_device *pdev)
 		DBG(0, "request EINT <%d> fail, ret<%d>\n", iddig_eint_num, ret);
 		return ret;
 	}
-//hct_drv add for otg begin
-#if __HCT_USB_MTK_OTG_SUPPORT__
-		hct_gpio_vbus(dev);
-		hct_gpio_vbus_mcu(dev);
-#endif
-//hct_drv add for otg end
+
 	return 0;
 }
 

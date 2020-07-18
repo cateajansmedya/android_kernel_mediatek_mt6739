@@ -16,8 +16,6 @@
 #include <linux/kernel.h>
 #include <linux/delay.h>
 
-#include <linux/hct_include/hct_project_all_config.h>
-
 #if defined(CONFIG_RT5081_PMU_DSV) || defined(CONFIG_MT6370_PMU_DSV)
 static struct regulator *disp_bias_pos;
 static struct regulator *disp_bias_neg;

@@ -10,7 +10,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  */
-#include <linux/hct_include/hct_project_all_config.h>
 
 #if defined(MTK_LCM_DEVICE_TREE_SUPPORT) || defined(__HCT_MTK_KTD2151__)
 #ifndef BUILD_LK

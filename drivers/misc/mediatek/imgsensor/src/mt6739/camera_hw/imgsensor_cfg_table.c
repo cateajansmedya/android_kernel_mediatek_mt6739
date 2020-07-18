@@ -16,11 +16,7 @@
 #include "regulator/regulator.h"
 #include "gpio/gpio.h"
 #include "mclk/mclk.h"
-
-
-
 #include "imgsensor_cfg_table.h"
-#include <linux/hct_include/hct_project_all_config.h>
 
 enum IMGSENSOR_RETURN (*hw_open[IMGSENSOR_HW_ID_MAX_NUM])(struct IMGSENSOR_HW_DEVICE **) = {
 	imgsensor_hw_regulator_open,

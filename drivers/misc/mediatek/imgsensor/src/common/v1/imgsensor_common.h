@@ -16,7 +16,6 @@
 
 #include "kd_camera_feature.h"
 #include "kd_imgsensor_define.h"
-#include <linux/hct_include/hct_project_all_config.h>
 
 /******************************************************************************
  * Debug configuration

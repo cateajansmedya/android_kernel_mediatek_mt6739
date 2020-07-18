@@ -65,8 +65,6 @@
 #include "mtk-soc-analog-type.h"
 #include "mtk-soc-codec-63xx.h"
 
-#include <linux/hct_include/hct_project_all_config.h>
-
 /* HP IMPEDANCE Current Calibration from EFUSE */
 /* #define EFUSE_HP_IMPEDANCE */
 /* static function declaration */

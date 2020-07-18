@@ -54,7 +54,7 @@
 #include "imgsensor_proc.h"
 #include "imgsensor_clk.h"
 #include "imgsensor.h"
-#include <linux/hct_include/hct_project_all_config.h>
+
 //hct-drv add begin
 #ifdef CONFIG_HCT_DEVICE_INFO_SUPPORT
 //#include "hct_devices.h"

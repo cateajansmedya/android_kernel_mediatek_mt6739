@@ -19,7 +19,6 @@
 #include "imgsensor_i2c.h"
 #include "imgsensor_hw.h"
 #include "imgsensor_clk.h"
-#include <linux/hct_include/hct_project_all_config.h>
 
 struct IMGSENSOR {
 	struct IMGSENSOR_HW     hw;

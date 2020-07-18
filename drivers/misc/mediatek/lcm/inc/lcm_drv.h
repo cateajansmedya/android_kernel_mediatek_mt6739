@@ -18,7 +18,6 @@
 #include <linux/platform_device.h>
 #include <linux/regulator/consumer.h>
 #include "lcm_define.h"
-#include <linux/hct_include/hct_project_all_config.h>
 
 #ifndef ARY_SIZE
 #define ARY_SIZE(x) (sizeof((x)) / sizeof((x[0])))

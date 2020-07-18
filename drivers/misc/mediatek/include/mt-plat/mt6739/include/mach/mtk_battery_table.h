@@ -15,7 +15,7 @@
 #define _MTK_BATTERY_TABLE_H
 
 #include "mtk_battery.h"
-#include <linux/hct_include/hct_project_all_config.h>
+
 /* ============================================================
  * define
  * ============================================================

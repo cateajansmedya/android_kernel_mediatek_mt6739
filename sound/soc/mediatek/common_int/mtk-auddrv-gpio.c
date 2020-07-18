@@ -55,7 +55,6 @@
 #include <linux/of.h>
 #include <linux/of_fdt.h>
 #include <linux/delay.h>
-#include <linux/hct_include/hct_project_all_config.h>
 
 #ifdef __HCT_EXTAMP_GPIO_NUM__
 #include <linux/of_gpio.h>

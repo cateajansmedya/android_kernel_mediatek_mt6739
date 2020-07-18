@@ -780,6 +780,22 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=strict-prototypes)
 # Prohibit date/time macros, which would make the build non-deterministic
 KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
 
+# disable warnings in gcc
+KBUILD_CFLAGS += $(call cc-option,-Wno-array-bounds)
+KBUILD_CFLAGS += $(call cc-option,-Wno-attribute-alias)
+KBUILD_CFLAGS += $(call cc-option,-Wno-attributes)
+KBUILD_CFLAGS += $(call cc-option,-Wno-logical-not-parentheses)
+KBUILD_CFLAGS += $(call cc-option,-Wno-misleading-indentation)
+KBUILD_CFLAGS += $(call cc-option,-Wno-packed-not-aligned)
+KBUILD_CFLAGS += $(call cc-option,-Wno-sizeof-pointer-memaccess)
+KBUILD_CFLAGS += $(call cc-option,-Wno-stringop-overflow)
+KBUILD_CFLAGS += $(call cc-option,-Wno-stringop-truncation)
+KBUILD_CFLAGS += $(call cc-disable-warning,address-of-packed-member)
+KBUILD_CFLAGS += $(call cc-disable-warning,format-overflow)
+KBUILD_CFLAGS += $(call cc-disable-warning,format-truncation)
+KBUILD_CFLAGS += $(call cc-disable-warning,int-in-bool-context)
+KBUILD_CFLAGS += $(call cc-disable-warning,maybe-uninitialized)
+
 # use the deterministic mode of AR if available
 KBUILD_ARFLAGS := $(call ar-option,D)
 

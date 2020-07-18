@@ -32,15 +32,19 @@ endif
 ccflags-y += \
  -D__linux__ $(OPTIM) -g \
  -fno-strict-aliasing \
- -W -Wall \
  -Wno-missing-field-initializers \
- -Wdeclaration-after-statement \
  -Wno-format-zero-length \
- -Wmissing-prototypes \
- -Wstrict-prototypes \
  -Wno-unused-parameter \
  -Wno-sign-compare \
  -Wno-type-limits \
+ -Wno-int-conversion \
+ -Wno-format \
+ -Wno-overflow \
+ -Wno-unused-label \
+ -Wno-unused-variable \
+ -Wno-unused-function \
+ -Wno-sizeof-pointer-div \
+ -Wno-declaration-after-statement \
  -Wno-error
 
 pvrsrvkm-y += \
