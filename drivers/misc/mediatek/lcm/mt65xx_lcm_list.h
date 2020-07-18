@@ -17,7 +17,7 @@
 #include <lcm_drv.h>
 
 extern LCM_DRIVER hct_ili9881p_dsi_vdo_hdp_panda_55_hz;
-
+extern LCM_DRIVER ST7797_400x400_dsi_vdo_lcm_drv;
 
 LCM_DRIVER *lcm_driver_list[] = {
 
@@ -25,7 +25,9 @@ LCM_DRIVER *lcm_driver_list[] = {
 	&hct_ili9881p_dsi_vdo_hdp_panda_55_hz,
 #endif
 
-
+#if defined(ST7797_400X400_DSI_VDO)
+	&ST7797_400x400_dsi_vdo_lcm_drv,
+#endif
 };
 
 #endif
