@@ -60,14 +60,10 @@ config TOUCHSCREEN_MTK_GSLX680
 	  Say Y here if you have gslX680 touch panel.
 
 	  If unsure, say N.
-config TOUCHSCREEN_MTK_FOCALTECH_FT6336U
-	bool "focaltech_touch for Mediatek package"
-	default n
+
+config TOUCHSCREEN_MTK_FOCALTECH_TOUCH
+	bool "Focaltech touchscreen driver"
 	help
-	  Say Y here if you have focaltech_touch touch panel.
-	  If unsure, say N.
-	  To compile this dirver as a module, choose M here: the
-	  module will be called.
-source "drivers/input/touchscreen/mediatek/focaltech_ft6336u/Kconfig"
+	  Say Y here if you have a focaltech touchscreen.
 
 endif

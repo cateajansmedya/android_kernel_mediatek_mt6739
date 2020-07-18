@@ -27,7 +27,6 @@
 *   Version: v1.0
 *
 ************************************************************************/
-#include <linux/hct_include/hct_project_all_config.h>    //hct-drv add for tpgesture by qhs
 
 #ifndef _LINUX_FOCLATECH_CONFIG_H_
 #define _LINUX_FOCLATECH_CONFIG_H_
@@ -102,7 +101,7 @@
 /*
  * choose your ic chip type of focaltech
  */
-#define FTS_CHIP_TYPE   _FT6336U
+#define FTS_CHIP_TYPE   _FT3367
 
 /******************* Enables *********************/
 /*********** 1 to enable, 0 to disable ***********/
@@ -129,13 +128,8 @@
  * Gesture function enable
  * default: disable
  */
-//hct-drv add for tpgesture by qhs begin
-#if __HCT_TP_GESTURE_SUPPORT__
-#define FTS_GESTURE_EN                         1
-#else
 #define FTS_GESTURE_EN                          0
-#endif
-//hct-drv add for tpgesture by qhs end
+
 /*
  * ESD check & protection
  * default: disable
@@ -182,61 +176,9 @@
 #ifdef __HCT_POWER_SOURCE_CUST_EN__
 #define FTS_POWER_SOURCE_CUST_EN	__HCT_POWER_SOURCE_CUST_EN__
 #else
-#define FTS_POWER_SOURCE_CUST_EN                0
+#define FTS_POWER_SOURCE_CUST_EN                1
 #endif
 
 /****************************************************/
-
-/********************** Upgrade ****************************/
-/*
- * auto upgrade, please keep enable
- */
-#define FTS_AUTO_UPGRADE_EN                     1
-
-/*
- * auto upgrade for lcd cfg
- */
-#define FTS_AUTO_LIC_UPGRADE_EN                 0
-
-/*
- * Check vendor_id number
- * 0:No check vendor_id (default)
- * 1/2/3: Check vendor_id for vendor compatibility
- */
-#define FTS_GET_VENDOR_ID_NUM                   0
-
-/*
- * vendor_id(s) for vendor(s) to be compatible with.
- * a confirmation of vendor_id(s) is recommended.
- * FTS_VENDOR_ID = PANEL_ID << 8 + VENDOR_ID
- * FTS_GET_VENDOR_ID_NUM == 0/1, no check vendor id, you may ignore them
- * FTS_GET_VENDOR_ID_NUM > 1, compatible with FTS_VENDOR_ID
- * FTS_GET_VENDOR_ID_NUM >= 2, compatible with FTS_VENDOR_ID2
- * FTS_GET_VENDOR_ID_NUM >= 3, compatible with FTS_VENDOR_ID3
- */
-#define FTS_VENDOR_ID                          0x0000
-#define FTS_VENDOR_ID2                         0x0000
-#define FTS_VENDOR_ID3                         0x0000
-
-/*
- * FW.i file for auto upgrade, you must replace it with your own
- * define your own fw_file, the sample one to be replaced is invalid
- * NOTE: if FTS_GET_VENDOR_ID_NUM > 1, it's the fw corresponding with FTS_VENDOR_ID
- */
-#define FTS_UPGRADE_FW_FILE                      "include/firmware/fw_sample.i"
-
-/*
- * if FTS_GET_VENDOR_ID_NUM >= 2, fw corrsponding with FTS_VENDOR_ID2
- * define your own fw_file, the sample one is invalid
- */
-#define FTS_UPGRADE_FW2_FILE                     "include/firmware/fw_sample.i"
-
-/*
- * if FTS_GET_VENDOR_ID_NUM >= 3, fw corrsponding with FTS_VENDOR_ID3
- * define your own fw_file, the sample one is invalid
- */
-#define FTS_UPGRADE_FW3_FILE                     "include/firmware/fw_sample.i"
-
-/*********************************************************/
 
 #endif /* _LINUX_FOCLATECH_CONFIG_H_ */

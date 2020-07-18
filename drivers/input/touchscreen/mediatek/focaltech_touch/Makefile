@@ -1,0 +1,9 @@
+ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/
+obj-y += focaltech_ex_fun.o
+obj-y += focaltech_gesture.o
+obj-y += focaltech_core.o
+obj-y += focaltech_esdcheck.o
+obj-y += focaltech_ex_mode.o
+obj-y += focaltech_proximity.o
+obj-y += focaltech_i2c.o
+obj-y += focaltech_point_report_check.o

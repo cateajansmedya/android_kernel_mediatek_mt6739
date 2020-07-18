@@ -53,46 +53,6 @@
 #if FTS_PSENSOR_EN
 static struct wake_lock hct_tp_wake_lock;
 #endif
-//hct-drv add for tpgesture by qhs begin
-#if __HCT_TP_GESTURE_SUPPORT__
-extern char tpgesture_value[10];
-char tpgesture_status_value[5] = {};
-extern char tpgesture_status;
-
-static ssize_t show_tpgesture_value(struct device* dev, struct device_attribute *attr, char *buf)
-{
-	printk("show tp gesture value is %s \n",tpgesture_value);
-	return scnprintf(buf, PAGE_SIZE, "%s\n", tpgesture_value);
-}
-static ssize_t show_tpgesture_status_value(struct device* dev, struct device_attribute *attr, char *buf)
-{
-	printk("show tp gesture status is %s \n",tpgesture_status_value);
-	return scnprintf(buf, PAGE_SIZE, "%s\n", tpgesture_status_value);
-}
-static ssize_t store_tpgesture_status_value(struct device* dev, struct device_attribute *attr, const char *buf, size_t count)
-{
-	if(!strncmp(buf, "on", 2))
-	{
-		sprintf(tpgesture_status_value,"on");
-		tpgesture_status = 1;//status --- on
-	}
-	else
-	{
-		sprintf(tpgesture_status_value,"off");
-		tpgesture_status = 0;//status --- off
-	}
-	printk("store_tpgesture_status_value status is %s \n",tpgesture_status_value);
-	return count;
-}
-static DEVICE_ATTR(tpgesture,  0664, show_tpgesture_value, NULL);
-static DEVICE_ATTR(tpgesture_status,  0664, show_tpgesture_status_value, store_tpgesture_status_value);
-static struct device_attribute *tpd_attr_list[] = {
-	&dev_attr_tpgesture,
-	&dev_attr_tpgesture_status,
-};
-#endif
-//hct-drv add for tpgesture by qhs end
-
 
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
 static int tpd_flag;
@@ -1033,13 +993,6 @@ static int tpd_probe(struct i2c_client *client, const struct i2c_device_id *id)
         goto err_irq_req;
     }
 
-#if FTS_AUTO_UPGRADE_EN
-    ret = fts_fwupg_init(ts_data);
-    if (ret) {
-        FTS_ERROR("init fw upgrade fail");
-    }
-#endif
-
 //hct-drv add for fwvno by qhs begin
 	fts_i2c_read_reg(client, FTS_REG_FW_VER, &fwver);
 	sprintf(tpd_device_driver.descript,"Vno:%d", fwver);
@@ -1098,10 +1051,6 @@ static int tpd_remove(struct i2c_client *client)
 #endif
 #if FTS_APK_NODE_EN
     fts_release_apk_debug_channel(ts_data);
-#endif
-
-#if FTS_AUTO_UPGRADE_EN
-    fts_fwupg_exit(ts_data);
 #endif
 
 #if FTS_ESDCHECK_EN
@@ -1314,14 +1263,6 @@ static struct tpd_driver_t tpd_device_driver = {
     .tpd_local_init = tpd_local_init,
     .suspend = tpd_suspend,
     .resume = tpd_resume,
-//hct-drv add for tpgesture by qhs begin
-#if __HCT_TP_GESTURE_SUPPORT__
-	.attrs = {
-		.attr = tpd_attr_list,
-		.num = (int)(sizeof(tpd_attr_list)/sizeof(tpd_attr_list[0])),
-	},
-#endif
-//hct-drv add for tpgesture by qhs end
 };
 
 /*****************************************************************************

@@ -58,7 +58,6 @@
 #include <linux/vmalloc.h>
 #include "tpd.h"
 #include "focaltech_common.h"
-#include <linux/hct_include/hct_project_all_config.h>    //add by qhs 20180301
 
 /*****************************************************************************
 * Private constant and macro definitions using #define
@@ -192,11 +191,6 @@ int fts_point_report_check_init(struct fts_ts_data *ts_data);
 int fts_point_report_check_exit(struct fts_ts_data *ts_data);
 void fts_prc_queue_work(struct fts_ts_data *ts_data);
 #endif
-
-/* FW upgrade */
-int fts_upgrade_bin(struct i2c_client *client, char *fw_name, bool force);
-int fts_fwupg_init(struct fts_ts_data *ts_data);
-int fts_fwupg_exit(struct fts_ts_data *ts_data);
 
 /* Other */
 int fts_reset_proc(int hdelayms);
