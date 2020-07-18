@@ -1,0 +1,383 @@
+/dts-v1/;
+#include "mt6739.dtsi"
+#include "cust.dtsi"
+
+#if (CONFIG_C8_GPIO)
+	#include "C7S/C8-gpio.dtsi"
+#else
+	#include "C7S/C7S-gpio.dtsi"
+#endif
+
+/ {
+	chosen {
+		bootargs = "console=tty0 console=ttyMT0,921600n1 root=/dev/ram initrd=0x44000000,0x1000000 loglevel=8 androidboot.selinux=permissive androidboot.hardware=mt6739 initcall_debug=1";
+	};
+
+	led0: led@0 {
+		compatible = "mediatek,red";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led1: led@1 {
+		compatible = "mediatek,green";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led2: led@2 {
+		compatible = "mediatek,blue";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led3: led@3 {
+		compatible = "mediatek,jogball-backlight";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led4: led@4 {
+		compatible = "mediatek,keyboard-backlight";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led5: led@5 {
+		compatible = "mediatek,button-backlight";
+		led_mode = <0>;
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	led6: led@6 {
+		compatible = "mediatek,lcd-backlight";
+#if (CONFIG_C8_OPTIMUS) || (CONFIG_C7S_HOPE)
+		led_mode = <4>;
+#else
+		led_mode = <5>;
+#endif
+		data = <1>;
+		pwm_config = <0 0 0 0 0>;
+	};
+
+	vibrator0: vibrator@0 {
+		compatible = "mediatek,vibrator";
+		vib_timer = <25>;
+		vib_limit = <9>;
+		vib_vol = <9>;
+	};
+
+	cust_accel@0 {
+		compatible = "mediatek,bma4xy";
+		i2c_num = <1>;
+		i2c_addr = <0x18 0 0 0>;
+#if (CONFIG_C7S_KIRIN)
+		direction = <7>;
+		remap_direction = <7>;
+#else
+		direction = <3>;
+		remap_direction = <3>;
+#endif
+		power_id = <0xffff>;
+		power_vol = <0>;
+		firlen = <0>;
+		is_batch_supported = <0>;
+	};
+};
+
+&touch {
+	tpd-resolution = <720 1280>;
+	use-tpd-button = <0>;
+	tpd-key-num = <3>;
+	tpd-key-local= <139 172 158 0>;
+	tpd-key-dim-local = <90 883 100 40 230 883 100 40 370 883 100 40 0 0 0 0>;
+	tpd-max-touch-num = <5>;
+	tpd-filter-enable = <1>;
+	tpd-filter-pixel-density = <106>;
+	tpd-filter-custom-prameters = <0 0 0 0 0 0 0 0 0 0 0 0>;
+	tpd-filter-custom-speed = <0 0 0>;
+	pinctrl-names = "default", "state_eint_as_int", "state_eint_output0", "state_eint_output1",
+		"state_rst_output0", "state_rst_output1";
+	pinctrl-0 = <&ctp_pins_default>;
+	pinctrl-1 = <&ctp_pins_eint_as_int>;
+	pinctrl-2 = <&ctp_pins_eint_output0>;
+	pinctrl-3 = <&ctp_pins_eint_output1>;
+	pinctrl-4 = <&ctp_pins_rst_output0>;
+	pinctrl-5 = <&ctp_pins_rst_output1>;
+	status = "okay";
+};
+
+&pio {
+	ctp_pins_default: eint0default {
+	};
+
+	ctp_pins_eint_as_int: eint@0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO6__FUNC_GPIO6>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	ctp_pins_eint_output0: eintoutput0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO6__FUNC_GPIO6>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	ctp_pins_eint_output1: eintoutput1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO6__FUNC_GPIO6>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	ctp_pins_rst_output0: rstoutput0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO119__FUNC_GPIO119>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	ctp_pins_rst_output1: rstoutput1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO119__FUNC_GPIO119>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+};
+
+&consys {
+	pinctrl-names = "default", "gps_lna_state_init", "gps_lna_state_oh", "gps_lna_state_ol";
+	pinctrl-0 = <&consys_pins_default>;
+	pinctrl-1 = <&gpslna_pins_init>;
+	pinctrl-2 = <&gpslna_pins_oh>;
+	pinctrl-3 = <&gpslna_pins_ol>;
+	status = "okay";
+};
+
+&pio {
+	consys_pins_default: default {
+	};
+
+	gpslna_pins_init: gpslna@0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO10__FUNC_GPIO10>;
+			slew-rate = <0>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	gpslna_pins_oh: gpslna@1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO10__FUNC_GPIO10>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	gpslna_pins_ol: gpslna@2 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO10__FUNC_GPIO10>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+};
+
+&mtkfb {
+	pinctrl-names = "mode_te_gpio", "mode_te_te", "lcm_rst_out0_gpio", "lcm_rst_out1_gpio",
+		"lcd_bias_enp0_gpio", "lcd_bias_enp1_gpio", "lcd_chip_select_0_gpio", "lcd_chip_select_1_gpio";
+	pinctrl-0 = <&mtkfb_pins_mode_te_gpio>;
+	pinctrl-1 = <&mtkfb_pins_mode_te_te>;
+	pinctrl-2 = <&mtkfb_pins_lcm_reset0>;
+	pinctrl-3 = <&mtkfb_pins_lcm_reset1>;
+	pinctrl-4 = <&mtkfb_pins_lcd_bias_enp0>;
+	pinctrl-5 = <&mtkfb_pins_lcd_bias_enp1>;
+	pinctrl-6 = <&mtkfb_pins_lcd_chip_select0>;
+	pinctrl-7 = <&mtkfb_pins_lcd_chip_select1>;
+	status = "okay";
+};
+
+&pio {
+	mtkfb_pins_mode_te_gpio: mode_te_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO84__FUNC_DSI_TE>;
+		};
+	};
+
+	mtkfb_pins_mode_te_te: mode_te_te {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO84__FUNC_DSI_TE>;
+		};
+	};
+
+	mtkfb_pins_lcm_reset0: lcm_rst_out0_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO83__FUNC_LCM_RST>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	mtkfb_pins_lcm_reset1: lcm_rst_out1_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO83__FUNC_LCM_RST>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	mtkfb_pins_lcd_bias_enp0: lcd_bias_enp0_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO122__FUNC_GPIO122>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	mtkfb_pins_lcd_bias_enp1: lcd_bias_enp1_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO122__FUNC_GPIO122>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	mtkfb_pins_lcd_chip_select0: lcd_chip_select_0_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO9__FUNC_GPIO9>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	mtkfb_pins_lcd_chip_select1: lcd_chip_select_1_gpio {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO9__FUNC_GPIO9>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+};
+
+&accdet {
+	accdet-mic-vol = <6>;
+	headset-mode-setting = <0x500 0x500 1 0x1f0 0x800 0x800 0x20 0x44>;
+	accdet-plugout-debounce = <1>;
+	accdet-mic-mode = <2>;
+	headset-eint-level-pol = <8>;
+	headset-three-key-threshold = <0 80 220 400>;
+	headset-three-key-threshold-CDD = <0 121 192 600>;
+	headset-four-key-threshold = <0 58 121 192 400>;
+	pinctrl-names = "default", "state_eint_as_int";
+	pinctrl-0 = <&accdet_pins_default>;
+	pinctrl-1 = <&accdet_pins_eint_as_int>;
+	status = "okay";
+};
+
+&pio {
+	accdet_pins_default: accdetdefault {
+	};
+
+	accdet_pins_eint_as_int: accdeteint@0 {
+		pins_cmd_dat {
+			slew-rate = <0>;
+			bias-disable;
+		};
+	};
+};
+
+&irtx_pwm {
+	pinctrl-names = "irtx_gpio_led_default", "irtx_gpio_led_set";
+	pinctrl-0 = <&irtx_gpio_led_default>;
+	pinctrl-1 = <&irtx_gpio_led_set>;
+	status = "okay";
+};
+
+&pio {
+	irtx_gpio_led_default: irtx_gpio_led_def@gpio12 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO12__FUNC_GPIO12>;
+			slew-rate = <1>;
+			bias-disable;
+			output-low;
+			input-schmitt-enable = <0>;
+		};
+	};
+
+	irtx_gpio_led_set: irtx_gpio_led_set@gpio12 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO12__FUNC_PWM1>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+};
+
+&apuart0 {
+	pinctrl-names = "uart0_gpio_default", "uart0_rx_set", "uart0_rx_clear", "uart0_tx_set", "uart0_tx_clear";
+	pinctrl-0 = <&uart0_gpio_def_cfg>;
+	pinctrl-1 = <&uart0_rx_set_cfg>;
+	pinctrl-2 = <&uart0_rx_clr_cfg>;
+	pinctrl-3 = <&uart0_tx_set_cfg>;
+	pinctrl-4 = <&uart0_tx_clr_cfg>;
+	status = "okay";
+};
+
+&pio {
+	uart0_gpio_def_cfg: uart0gpiodefault {
+	};
+
+	uart0_rx_set_cfg: uart0_rx_set@gpio20 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO20__FUNC_UART0RX>;
+		};
+	};
+
+	uart0_rx_clr_cfg: uart0_rx_clear@gpio20 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO20__FUNC_GPIO20>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	uart0_tx_set_cfg: uart0_tx_set@gpio21 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO21__FUNC_UART0TX>;
+		};
+	};
+
+	uart0_tx_clr_cfg: uart0_tx_clear@gpio21 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO21__FUNC_GPIO21>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+};
+
+&i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	clock-frequency = <400000>;
+
+	mtk-usb@60 {
+		compatible = "mediatek,mtk-usb";
+		reg = <0x60>;
+		status = "okay";
+	};
+};

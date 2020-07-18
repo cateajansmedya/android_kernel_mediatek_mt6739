@@ -1,0 +1,523 @@
+&wiite_ctrl {
+	pinctrl-names = "pin_default", "pin4_gpio_out0", "pin4_gpio_out1", "pin4_gpio_out_u1tx",
+		"pin4_gpio_in_eint", "pin5_gpio_out0", "pin5_gpio_out1", "pin5_gpio_in_u1rx",
+		"pin5_gpio_in_eint", "pin6_gpio_out0", "pin6_gpio_out1", "pin6_gpio_out_s0clk",
+		"pin6_gpio_in_eint", "pin7_gpio_out0", "pin7_gpio_out1", "pin7_gpio_out_s0csb",
+		"pin7_gpio_in_eint", "pin8_gpio_out0", "pin8_gpio_out1", "pin8_gpio_out_s0mo",
+		"pin8_gpio_in_eint", "pin10_gpio_out0", "pin10_gpio_out1", "pin10_gpio_in_s0mi",
+		"pin10_gpio_in_eint", "pin11_gpio_out0", "pin11_gpio_out1", "pin11_gpio_in_eint",
+		"pin18_gpio_out0", "pin18_gpio_out1", "pin28_gpio_out0", "pin28_gpio_out1";
+	pinctrl-0 = <&con_pin_default>;
+	pinctrl-1 = <&con_pin4_out0>;
+	pinctrl-2 = <&con_pin4_out1>;
+	pinctrl-3 = <&con_pin4_out_u1tx>;
+	pinctrl-4 = <&con_pin4_in_eint>;
+	pinctrl-5 = <&con_pin5_out0>;
+	pinctrl-6 = <&con_pin5_out1>;
+	pinctrl-7 = <&con_pin5_in_u1rx>;
+	pinctrl-8 = <&con_pin5_in_eint>;
+	pinctrl-9 = <&con_pin6_out0>;
+	pinctrl-10 = <&con_pin6_out1>;
+	pinctrl-11 = <&con_pin6_out_s0clk>;
+	pinctrl-12 = <&con_pin6_in_eint>;
+	pinctrl-13 = <&con_pin7_out0>;
+	pinctrl-14 = <&con_pin7_out1>;
+	pinctrl-15 = <&con_pin7_in_s0csb>;
+	pinctrl-16 = <&con_pin7_in_eint>;
+	pinctrl-17 = <&con_pin8_out0>;
+	pinctrl-18 = <&con_pin8_out1>;
+	pinctrl-19 = <&con_pin8_in_s0mo>;
+	pinctrl-20 = <&con_pin8_in_eint>;
+	pinctrl-21 = <&con_pin10_out0>;
+	pinctrl-22 = <&con_pin10_out1>;
+	pinctrl-23 = <&con_pin10_in_s0mi>;
+	pinctrl-24 = <&con_pin10_in_eint>;
+	pinctrl-25 = <&con_pin11_out0>;
+	pinctrl-26 = <&con_pin11_out1>;
+	pinctrl-27 = <&con_pin11_in_eint>;
+	pinctrl-28 = <&con_pin18_out0>;
+	pinctrl-29 = <&con_pin18_out1>;
+	pinctrl-30 = <&con_pin28_out0>;
+	pinctrl-31 = <&con_pin28_out1>;
+	status = "okay";
+};
+
+&pio {
+	con_pin_default: pin_default {
+	};
+
+	con_pin4_out0: pin4_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO23__FUNC_GPIO23>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin4_out1: pin4_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO23__FUNC_GPIO23>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin4_out_u1tx: pin4_gpio_out_u1tx {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO23__FUNC_UART1TX>;
+			slew-rate = <1>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin4_in_eint: pin4_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO23__FUNC_GPIO23>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin5_out0: pin5_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO22__FUNC_GPIO22>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin5_out1: pin5_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO22__FUNC_GPIO22>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin5_in_u1rx: pin5_gpio_in_u1rx {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO22__FUNC_UART1RX>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin5_in_eint: pin5_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO22__FUNC_GPIO22>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin6_out0: pin6_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO32__FUNC_GPIO32>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin6_out1: pin6_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO32__FUNC_GPIO32>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin6_out_s0clk: pin6_gpio_out_s0clk {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO32__FUNC_SPI0_A_CLK>;
+			slew-rate = <1>;
+		};
+	};
+
+	con_pin6_in_eint: pin6_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO32__FUNC_GPIO32>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin7_out0: pin7_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO31__FUNC_GPIO31>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin7_out1: pin7_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO31__FUNC_GPIO31>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin7_in_s0csb: pin7_gpio_out_s0csb {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO31__FUNC_SPI0_A_CSB>;
+			slew-rate = <1>;
+		};
+	};
+
+	con_pin7_in_eint: pin7_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO31__FUNC_GPIO31>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin8_out0: pin8_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO34__FUNC_GPIO34>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin8_out1: pin8_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO34__FUNC_GPIO34>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin8_in_s0mo: pin8_gpio_out_s0mo {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO34__FUNC_SPI0_A_MO>;
+			slew-rate = <1>;
+		};
+	};
+
+	con_pin8_in_eint: pin8_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO34__FUNC_GPIO34>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin10_out0: pin10_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO33__FUNC_GPIO33>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin10_out1: pin10_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO33__FUNC_GPIO33>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin10_in_s0mi: pin10_gpio_in_s0mi {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO33__FUNC_SPI0_A_MI>;
+			slew-rate = <1>;
+		};
+	};
+
+	con_pin10_in_eint: pin10_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO33__FUNC_GPIO33>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin11_out0: pin11_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO25__FUNC_GPIO25>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin11_out1: pin11_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO25__FUNC_GPIO25>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin11_in_eint: pin11_gpio_in_eint {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO25__FUNC_GPIO25>;
+			slew-rate = <0>;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin18_out0: pin18_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO8__FUNC_GPIO8>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin18_out1: pin18_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO8__FUNC_GPIO8>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+
+	con_pin28_out0: pin28_gpio_out0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO28__FUNC_GPIO28>;
+			slew-rate = <1>;
+			output-low;
+			bias-pull-down = <00>;
+		};
+	};
+
+	con_pin28_out1: pin28_gpio_out1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO28__FUNC_GPIO28>;
+			slew-rate = <1>;
+			output-high;
+			bias-pull-up = <00>;
+		};
+	};
+};
+
+&kd_camera_hw1 {
+	pinctrl-names = "default", "cam0_rst0", "cam0_rst1", "cam0_pnd0", "cam0_pnd1",
+		"cam1_rst0", "cam1_rst1", "cam1_pnd0", "cam1_pnd1", "cam_ldo_sub_vcamd_0",
+		"cam_ldo_sub_vcamd_1", "cam0_mclk_on", "cam0_mclk_off", "cam1_mclk_on", "cam1_mclk_off";
+	pinctrl-0 = <&camera_pins_default>;
+	pinctrl-1 = <&camera_pins_cam0_rst0>;
+	pinctrl-2 = <&camera_pins_cam0_rst1>;
+	pinctrl-3 = <&camera_pins_cam0_pnd0>;
+	pinctrl-4 = <&camera_pins_cam0_pnd1>;
+	pinctrl-5 = <&camera_pins_cam1_rst0>;
+	pinctrl-6 = <&camera_pins_cam1_rst1>;
+	pinctrl-7 = <&camera_pins_cam1_pnd0>;
+	pinctrl-8 = <&camera_pins_cam1_pnd1>;
+	pinctrl-9 = <&camera_pins_cam_ldo_sub_vcamd_0>;
+	pinctrl-10 = <&camera_pins_cam_ldo_sub_vcamd_1>;
+	pinctrl-11 = <&camera_pins_cam0_mclk_on>;
+	pinctrl-12 = <&camera_pins_cam0_mclk_off>;
+	pinctrl-13 = <&camera_pins_cam1_mclk_on>;
+	pinctrl-14 = <&camera_pins_cam1_mclk_off>;
+	status = "okay";
+};
+
+&pio {
+	camera_pins_default: camdefault {
+	};
+
+	camera_pins_cam0_rst0: cam0@0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO29__FUNC_GPIO29>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	camera_pins_cam0_rst1: cam0@1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO29__FUNC_GPIO29>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	camera_pins_cam0_pnd0: cam0@2 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO30__FUNC_GPIO30>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	camera_pins_cam0_pnd1: cam0@3 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO30__FUNC_GPIO30>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	camera_pins_cam1_rst0: cam1@0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO15__FUNC_GPIO15>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	camera_pins_cam1_rst1: cam1@1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO15__FUNC_GPIO15>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	camera_pins_cam1_pnd0: cam1@2 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO122__FUNC_GPIO122>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	camera_pins_cam1_pnd1: cam1@3 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO122__FUNC_GPIO122>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	camera_pins_cam_ldo_sub_vcamd_0: cam1@vcamd0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO13__FUNC_GPIO13>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	camera_pins_cam_ldo_sub_vcamd_1: cam1@vcamd1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO13__FUNC_GPIO13>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	camera_pins_cam0_mclk_on: camera_pins_cam0_mclk_on {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO126__FUNC_CMMCLK0>;
+		};
+	};
+
+	camera_pins_cam0_mclk_off: camera_pins_cam0_mclk_off {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO126__FUNC_GPIO126>;
+		};
+	};
+
+	camera_pins_cam1_mclk_on: camera_pins_cam1_mclk_on {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO126__FUNC_CMMCLK0>;
+		};
+	};
+
+	camera_pins_cam1_mclk_off: camera_pins_cam1_mclk_off {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO126__FUNC_GPIO126>;
+		};
+	};
+};
+
+&audgpio {
+	pinctrl-names = "aud_dat_mosi_off", "aud_dat_mosi_on", "aud_dat_miso_off", "aud_dat_miso_on",
+		"extamp-pullhigh", "extamp-pulllow";
+	pinctrl-0 = <&aud_dat_mosi_off>;
+	pinctrl-1 = <&aud_dat_mosi_on>;
+	pinctrl-2 = <&aud_dat_miso_off>;
+	pinctrl-3 = <&aud_dat_miso_on>;
+	pinctrl-4 = <&aud_pins_extamp_high>;
+	pinctrl-5 = <&aud_pins_extamp_low>;
+	status = "okay";
+};
+
+&pio {
+	aud_dat_mosi_off: aud_dat_mosi_off {
+		pins_cmd1_dat {
+			pins = <PINMUX_GPIO63__FUNC_GPIO63>;
+			input-enable;
+			slew-rate = <0>;
+			bias-disable;
+		};
+
+		pins_cmd2_dat {
+			pins = <PINMUX_GPIO64__FUNC_GPIO64>;
+			input-enable;
+			slew-rate = <0>;
+			bias-disable;
+		};
+	};
+
+	aud_dat_mosi_on: aud_dat_mosi_on {
+		pins_cmd1_dat {
+			pins = <PINMUX_GPIO63__FUNC_AUD_DAT_MOSI0>;
+		};
+
+		pins_cmd2_dat {
+			pins = <PINMUX_GPIO64__FUNC_AUD_DAT_MOSI1>;
+		};
+	};
+
+	aud_dat_miso_off: aud_dat_miso_off {
+		pins_cmd1_dat {
+			pins = <PINMUX_GPIO67__FUNC_GPIO67>;
+			input-enable;
+			slew-rate = <0>;
+			bias-disable;
+		};
+
+		pins_cmd2_dat {
+			pins = <PINMUX_GPIO68__FUNC_GPIO68>;
+			input-enable;
+			slew-rate = <0>;
+			bias-disable;
+		};
+	};
+
+	aud_dat_miso_on: aud_dat_miso_on {
+		pins_cmd1_dat {
+			pins = <PINMUX_GPIO67__FUNC_AUD_DAT_MISO0>;
+		};
+
+		pins_cmd2_dat {
+			pins = <PINMUX_GPIO68__FUNC_AUD_DAT_MISO1>;
+		};
+	};
+
+	aud_pins_extamp_high: audexamphigh {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO11__FUNC_GPIO11>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+
+	aud_pins_extamp_low: audexamplow {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO11__FUNC_GPIO11>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+};

@@ -1,0 +1,121 @@
+mt6357_charger {
+	compatible = "mediatek,mt6357_charger";
+	charger_name = "primary_chg";
+	alias_name = "mt6357";
+	ichg = <500000>;
+	cv = <4350000>;
+	vcdt_hv_thres = <7000000>;
+	vbat_ov_thres = <4450000>;
+};
+
+charger: charger {
+	compatible = "mediatek,charger";
+	algorithm_name = "LinearCharging";
+
+	/* enable_sw_jeita; */
+	enable_pe_plus;
+	enable_pe_2;
+	enable_pe_3;
+
+	/* common */
+	battery_cv = <4350000>;
+	max_charger_voltage = <6500000>;
+
+	/* charging current */
+	usb_charger_current_suspend = <500000>;
+	usb_charger_current_unconfigured = <500000>;
+	usb_charger_current_configured = <500000>;
+	usb_charger_current = <500000>;
+	ac_charger_current = <500000>;
+	ac_charger_input_current = <500000>;
+	non_std_ac_charger_current = <500000>;
+	charging_host_charger_current = <500000>;
+	apple_1_0a_charger_current = <500000>;
+	apple_2_1a_charger_current = <500000>;
+	ta_ac_charger_current = <500000>;
+
+	/* sw jeita */
+	jeita_temp_above_t4_cv_voltage = <4240000>;
+	jeita_temp_t3_to_t4_cv_voltage = <4240000>;
+	jeita_temp_t2_to_t3_cv_voltage = <4340000>;
+	jeita_temp_t1_to_t2_cv_voltage = <4240000>;
+	jeita_temp_t0_to_t1_cv_voltage = <4040000>;
+	jeita_temp_below_t0_cv_voltage = <4040000>;
+	temp_t4_threshold = <50>;
+	temp_t4_thres_minus_x_degree = <47>;
+	temp_t3_threshold = <45>;
+	temp_t3_thres_minus_x_degree = <39>;
+	temp_t2_threshold = <10>;
+	temp_t2_thres_plus_x_degree = <16>;
+	temp_t1_threshold = <0>;
+	temp_t1_thres_plus_x_degree = <6>;
+	temp_t0_threshold = <0>;
+	temp_t0_thres_plus_x_degree = <0>;
+	temp_neg_10_threshold = <0>;
+
+	/* battery temperature protection */
+	enable_min_charge_temperature;
+	min_charge_temperature = <0>;
+	min_charge_temperature_plus_x_degree = <6>;
+	max_charge_temperature = <55>;
+	max_charge_temperature_minus_x_degree = <47>;
+
+	/* PE 2.0 */
+	pe20_ichg_level_threshold = <1000>;
+	ta_start_battery_soc = <0>;
+	ta_stop_battery_soc = <85>;
+
+	/* cable measurement impedance */
+	cable_imp_threshold = <699>;
+	vbat_cable_imp_threshold = <3900>;
+
+	/* bif */
+	bif_threshold1 = <4250000>;
+	bif_threshold2 = <4300000>;
+	bif_cv_under_threshold2 = <4450000>;
+
+	/* SW safety timer */
+	enable_sw_safety_timer;
+	max_charging_time = <43200>;
+
+	/* linear charger */
+	recharge_offset = <80000>;
+	topoff_voltage = <3400000>;
+	chg_full_current = <20000>;
+};
+
+bat_gm30: bat_gm30 {
+	compatible = "mediatek,bat_gm30";
+	DIFFERENCE_FULLOCV_ITH = <(40)>;
+	SHUTDOWN_1_TIME = <(60)>;
+	KEEP_100_PERCENT = <(3)>;
+	R_FG_VALUE = <(10)>;
+	EMBEDDED_SEL = <(0)>;
+	PMIC_SHUTDOWN_CURRENT = <(20)>;
+	FG_METER_RESISTANCE = <(200)>;
+	CAR_TUNE_VALUE = <(77)>;
+	TEMPERATURE_T0 = <(50)>;
+	TEMPERATURE_T1 = <(25)>;
+	TEMPERATURE_T2 = <(10)>;
+	TEMPERATURE_T3 = <(0)>;
+	TEMPERATURE_T4 = <(-10)>;
+	g_FG_PSEUDO100_T0 = <(98)>;
+	g_FG_PSEUDO100_T1 = <(98)>;
+	g_FG_PSEUDO100_T2 = <(95)>;
+	g_FG_PSEUDO100_T3 = <(90)>;
+	g_FG_PSEUDO100_T4 = <(80)>;
+	Q_MAX_SYS_VOLTAGE_BAT0 = <(3400)>;
+	Q_MAX_SYS_VOLTAGE_BAT1 = <(3400)>;
+	Q_MAX_SYS_VOLTAGE_BAT2 = <(3400)>;
+	Q_MAX_SYS_VOLTAGE_BAT3 = <(3400)>;
+
+#if (CONFIG_C8_OPTIMUS)
+	#include "C7S/battery/optimus.dtsi"
+#elif (CONFIG_C7S_HOPE)
+	#include "C7S/battery/hope.dtsi"
+#elif (CONFIG_C7S_LEM12)
+	#include "C7S/battery/lem12.dtsi"
+#elif (CONFIG_C7S_PRIME) || (CONFIG_C7S_KIRIN)
+	#include "C7S/battery/prime.dtsi"
+#endif
+};
