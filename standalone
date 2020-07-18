@@ -1,0 +1,29 @@
+#!/bin/bash
+case $1 in
+	"hope")
+		CONFIG=C7S_hope_defconfig
+		;;
+	"kirin")
+		CONFIG=C7S_kirin_defconfig
+		;;
+	"lem12")
+		CONFIG=C7S_lem12_defconfig
+		;;
+	"prime")
+		CONFIG=C7S_prime_defconfig
+		;;
+	"optimus")
+		CONFIG=C8_optimus_defconfig
+		;;
+	"optimus-pro")
+		CONFIG=C8_optimus_pro_defconfig
+		;;
+esac
+
+if [ -z $CONFIG ]; then
+	echo "no configuration selected"
+else
+	rm -rf out
+	make O=out ARCH=arm $CONFIG
+	make O=out ARCH=arm -j16
+fi
