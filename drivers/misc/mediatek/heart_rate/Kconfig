@@ -1,0 +1,1 @@
+source "drivers/misc/mediatek/heart_rate/pixart_pah8001/Kconfig"

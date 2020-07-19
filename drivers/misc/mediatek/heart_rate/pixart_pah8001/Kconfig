@@ -1,0 +1,5 @@
+config HEART_RATE_SENSOR_PIXART_PAH8001
+	bool "Sensor driver for Pixart PAH8001"
+	default n
+	help
+	  Say Y here if you have a Pixart PAH8001 heart rate sensor.

@@ -79,7 +79,8 @@ obj-$(CONFIG_CUSTOM_KERNEL_BAROMETER) += barometer/
 #obj-$(CONFIG_CUSTOM_KERNEL_UNCALI_MAG_SENSOR)	+= uncali_mag/
 endif
 else
-obj-y   += sensor_bio/
+obj-y += sensor_bio/
+obj-y += heart_rate/
 endif
 obj-$(CONFIG_MTPROF)	+= mtprof/
 ifeq ($(CONFIG_MTK_I2C_EXTENSION),y)
