@@ -6,3 +6,4 @@ obj-y   +=  accel.o accel_factory.o
 
 obj-$(CONFIG_MTK_ACCELHUB)		+=	accelhub/
 obj-$(CONFIG_MTK_BMI160_SPI)   +=  bmi160-spi/
+obj-$(CONFIG_MTK_BMA4XY) += bma4xy/
