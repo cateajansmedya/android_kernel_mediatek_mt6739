@@ -81,6 +81,7 @@ endif
 else
 obj-y += sensor_bio/
 obj-y += heart_rate/
+obj-y += C7S/
 endif
 obj-$(CONFIG_MTPROF)	+= mtprof/
 ifeq ($(CONFIG_MTK_I2C_EXTENSION),y)

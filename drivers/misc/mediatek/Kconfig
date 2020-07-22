@@ -373,6 +373,7 @@ source "drivers/misc/mediatek/usb_c/Kconfig"
 source "drivers/misc/mediatek/vibrator/Kconfig"
 source "drivers/misc/mediatek/xhci/Kconfig"
 source "drivers/misc/mediatek/pcie_ut/Kconfig"
+source "drivers/misc/mediatek/C7S/Kconfig"
 
 endmenu  # Peripheral
 

@@ -1,0 +1,56 @@
+menu "C7S Platform"
+  config C7S_GPIO
+    bool "C7S GPIO driver"
+    default n
+    help
+      Select Y here to enable the C7S GPIO driver.
+
+  if C7S_GPIO
+    choice
+      prompt "C7S Devices"
+
+    config C7S_LEM12
+      bool "C7S support for LEM12"
+      help
+        Select Y here to enable support for the Lemfo LEM12.
+
+    config C7S_PRIME
+      bool "C7S support for PRIME"
+      help
+        Select Y here to enable support for the Kospet Prime.
+
+    config C7S_KIRIN
+      bool "C7S support for KIRIN"
+      help
+        Select Y here to enable support for the Rollme S08.
+
+    config C7S_HOPE
+      bool "C7S support for HOPE"
+      help
+        Select Y here to enable support for the Kospet Hope.
+
+    endchoice
+  endif
+endmenu
+
+menu "C8 Platform"
+  config C8_GPIO
+    depends on !C7S_GPIO
+    bool "C8 GPIO driver"
+    default n
+    help
+      Select Y here to enable the C8 GPIO driver.
+
+  if C8_GPIO
+    choice
+      prompt "C8 Devices"
+
+    config C8_OPTIMUS
+      bool "C8 support for OPTIMUS"
+      help
+        Select Y here to enable support for the Kospet Optimus Pro.
+
+    endchoice
+    source "drivers/misc/mediatek/C7S/nrf_control/Kconfig"
+  endif
+endmenu
