@@ -572,7 +572,7 @@ void battery_update_psd(struct battery_data *bat_data)
 	bat_data->BAT_batt_temp = battery_get_bat_temperature();
 	bat_data->BAT_TempBattVoltage = battery_meter_get_tempV();
 	bat_data->BAT_TemperatureR = battery_meter_get_tempR(bat_data->BAT_TempBattVoltage);
-	bat_data->BAT_BatteryAverageCurrent = battery_get_bat_current();//battery_get_ibus
+	bat_data->BAT_BatteryAverageCurrent = battery_get_ibus();
 	bat_data->BAT_ISenseVoltage = battery_meter_get_VSense();
 	bat_data->BAT_ChargerVoltage = battery_get_vbus();
 }

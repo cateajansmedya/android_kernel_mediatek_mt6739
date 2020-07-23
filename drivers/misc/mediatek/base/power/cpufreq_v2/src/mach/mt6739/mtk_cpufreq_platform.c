@@ -476,30 +476,9 @@ int mt_cpufreq_dts_map(void)
 	return 0;
 }
 
-#define SEG_EFUSE 30
-#define TURBO_EFUSE 29 /* 590 */
-
 unsigned int _mt_cpufreq_get_cpu_level(void)
 {
-	unsigned int lv = CPU_LEVEL_0;
-	unsigned int seg_code = 0;
-	unsigned int turbo_code = 0;
-
-	seg_code = get_devinfo_with_index(SEG_EFUSE);
-
-	turbo_code = get_devinfo_with_index(TURBO_EFUSE);
-	turbo_code = _GET_BITS_VAL_(21:20, turbo_code);
-
-	if ((seg_code == 0x80 || seg_code == 0x88 || seg_code == 0x0
-		|| seg_code == 0x08 || seg_code == 0x90) && turbo_code == 0x3)
-		lv = CPU_LEVEL_1;
-	else if ((seg_code == 0x48 || seg_code == 0x40 || seg_code == 0xC8
-		|| seg_code == 0xC0 || seg_code == 0xD0) && turbo_code == 0x3)
-		lv = CPU_LEVEL_1;
-	else
-		lv = CPU_LEVEL_0;
-
-	return lv;
+	return CPU_LEVEL_0;
 }
 
 unsigned int _mt_cpufreq_disable_feature(void)

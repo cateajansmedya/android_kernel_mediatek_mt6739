@@ -22,11 +22,11 @@
 #define CHR_BATFULL (0x0003)
 #define CHR_ERROR (0x0004)
 
-#define MAX_TOPOFF_CHARGING_TIME (8 * 60 * 60) /* 3 hours */
+#define MAX_TOPOFF_CHARGING_TIME (3 * 60 * 60) /* 3 hours */
 
 #define RECHARGE_OFFSET 150000 /* uV */
 #define TOPOFF_VOLTAGE 4200000 /* uV */
-#define CHG_FULL_CURRENT 150000 /* uA */
+#define CHG_FULL_CURRENT 40000 /* uA */
 
 struct linear_charging_alg_data {
 	int state;
