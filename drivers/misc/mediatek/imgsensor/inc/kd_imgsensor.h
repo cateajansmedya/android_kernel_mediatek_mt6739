@@ -306,6 +306,7 @@
 /*Toshiba*/
 #define T4KA7_SENSOR_ID                         0x2c30
 /*Others*/
+#define BF2206_SENSOR_ID                        0x2206
 #define SHARP3D_SENSOR_ID                       0x003d
 #define T8EV5_SENSOR_ID                         0x1011
 
@@ -472,6 +473,7 @@
 /*Toshiba*/
 #define SENSOR_DRVNAME_T4KA7_MIPI_RAW           "t4ka7_mipi_raw"
 /*Others*/
+#define SENSOR_DRVNAME_BF2206_MIPI_RAW          "bf2206_mipi_raw"
 #define SENSOR_DRVNAME_SHARP3D_MIPI_YUV         "sharp3d_mipi_yuv"
 #define SENSOR_DRVNAME_T8EV5_YUV                "t8ev5_yuv"
 /*Test*/

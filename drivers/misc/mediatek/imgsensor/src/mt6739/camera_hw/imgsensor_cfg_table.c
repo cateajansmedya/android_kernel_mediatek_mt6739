@@ -760,6 +760,21 @@ struct IMGSENSOR_HW_POWER_SEQ sensor_power_sequence[] = {
 		},
 	},
 #endif
+#if defined(BF2206_MIPI_RAW)
+	{
+		SENSOR_DRVNAME_BF2206_MIPI_RAW,
+		{
+			{SensorMCLK, Vol_High, 0},
+			{PDN, Vol_High, 1},
+			{RST, Vol_Low, 50},
+			{DOVDD, Vol_2800, 5},
+			{DVDD, Vol_2800, 5},
+			{AVDD, Vol_2800, 10},
+			{PDN, Vol_Low, 10},
+			{RST, Vol_High, 20}
+		},
+	},
+#endif
 	/* add new sensor before this line */
 	{NULL,},
 };
