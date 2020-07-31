@@ -66,4 +66,9 @@ config TOUCHSCREEN_MTK_FOCALTECH_TOUCH
 	help
 	  Say Y here if you have a focaltech touchscreen.
 
+config TOUCHSCREEN_MTK_IT7250
+	bool "IT7250 touchscreen driver"
+	help
+	  Say Y here if you have a IT7250 connected to your system.
+
 endif
