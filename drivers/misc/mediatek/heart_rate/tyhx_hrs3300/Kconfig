@@ -1,0 +1,5 @@
+config HEART_RATE_SENSOR_TYHX_HRS3300
+	bool "Sensor driver for TYHX HRS3300"
+	default n
+	help
+	  Say Y here if you have a TYHX HRS3300 heart rate sensor.
