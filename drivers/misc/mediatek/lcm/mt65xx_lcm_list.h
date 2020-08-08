@@ -20,6 +20,7 @@ extern LCM_DRIVER hct_ili9881p_dsi_vdo_hdp_panda_55_hz;
 extern LCM_DRIVER ST7797_400x400_dsi_vdo_lcm_drv;
 extern LCM_DRIVER RM67162_400x400_dsi_cmd_oled_drv;
 extern LCM_DRIVER RM67162_454x454_dsi_cmd_oled_drv;
+extern LCM_DRIVER RM69330_454x454_dsi_cmd_oled_drv;
 
 LCM_DRIVER *lcm_driver_list[] = {
 
@@ -37,6 +38,10 @@ LCM_DRIVER *lcm_driver_list[] = {
 
 #if defined(RM67162_454X454_DSI_CMD_OLED)
 	&RM67162_454x454_dsi_cmd_oled_drv,
+#endif
+
+#if defined(RM69330_454X454_DSI_CMD_OLED)
+	&RM69330_454x454_dsi_cmd_oled_drv,
 #endif
 };
 
