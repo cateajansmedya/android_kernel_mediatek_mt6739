@@ -389,6 +389,12 @@ static void kpd_pwrkey_eint_handler(void)
 #endif
 /*********************************************************************/
 
+void kpd_key_input(int key, int value)
+{
+	input_report_key(kpd_input_dev, key, value ? 1 : 0);
+	input_sync(kpd_input_dev);
+}
+
 /*********************************************************************/
 #ifdef CONFIG_KPD_PWRKEY_USE_PMIC
 void kpd_pwrkey_pmic_handler(unsigned long pressed)

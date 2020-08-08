@@ -328,11 +328,18 @@ int is_slt_test(void)
 	return slt_test;
 }
 
+#if defined(CONFIG_C8_NRF_CONTROL)
+void nrf_set_backlight(int value);
+#endif
+
 int mtkfb_set_backlight_level(unsigned int level)
 {
 	MTKFB_FUNC();
 	DISPDBG("mtkfb_set_backlight_level:%d Start\n", level);
 	primary_display_setbacklight(level);
+#if defined(CONFIG_C8_NRF_CONTROL)
+	nrf_set_backlight(level ? 1 : 0);
+#endif
 	DISPDBG("mtkfb_set_backlight_level End\n");
 	return 0;
 }

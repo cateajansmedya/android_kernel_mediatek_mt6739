@@ -93,7 +93,11 @@ struct step_c_control_path {
 };
 
 struct step_c_data_path {
+#if defined(CONFIG_C8_NRF_CONTROL)
+	int (*get_data)(uint32_t *step, uint32_t *cal, uint32_t *dist, int *status);
+#else
 	int (*get_data)(uint32_t *value, int *status);
+#endif
 	int (*get_data_step_d)(uint32_t *value, int *status);
 	int (*get_data_significant)(uint32_t *value, int *status);
 	int (*get_data_floor_c)(uint32_t *value, int *status);
@@ -109,6 +113,10 @@ struct step_c_init_info {
 
 struct step_c_data {
 	uint32_t counter;
+#if defined(CONFIG_C8_NRF_CONTROL)
+	uint32_t cal;
+	uint32_t dist;
+#endif
 	int status;
 	int data_updata;
 	uint32_t floor_counter;
@@ -160,7 +168,11 @@ typedef enum {
 extern int  step_notify(STEP_NOTIFY_TYPE type);
 
 extern int step_c_driver_add(struct step_c_init_info *obj);
+#if defined(CONFIG_C8_NRF_CONTROL)
+extern int step_c_data_report(uint32_t new_counter, uint32_t dist, uint32_t cal, int status);
+#else
 extern int step_c_data_report(uint32_t new_counter, int status);
+#endif
 extern int step_c_flush_report(void);
 extern int step_d_flush_report(void);
 extern int smd_flush_report(void);

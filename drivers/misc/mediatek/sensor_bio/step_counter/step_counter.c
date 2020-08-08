@@ -24,6 +24,9 @@ static void step_c_work_func(struct work_struct *work)
 
 	struct step_c_context *cxt = NULL;
 	uint32_t counter;
+#if defined(CONFIG_C8_NRF_CONTROL)
+	uint32_t dist, cal;
+#endif
 	uint32_t counter_floor_c;
 	/* hwm_sensor_data sensor_data; */
 	int status;
@@ -45,7 +48,11 @@ static void step_c_work_func(struct work_struct *work)
 
 	/* add wake lock to make sure data can be read before system suspend */
 	if (cxt->is_active_data == true)
+#if defined(CONFIG_C8_NRF_CONTROL)
+		err = cxt->step_c_data.get_data(&counter, &dist, &cal, &status);
+#else
 		err = cxt->step_c_data.get_data(&counter, &status);
+#endif
 
 	if (err) {
 		STEP_C_PR_ERR("get step_c data fails!!\n");
@@ -53,6 +60,10 @@ static void step_c_work_func(struct work_struct *work)
 	} else {
 		{
 			cxt->drv_data.counter = counter;
+#if defined(CONFIG_C8_NRF_CONTROL)
+			cxt->drv_data.dist = dist;
+			cxt->drv_data.cal = cal;
+#endif
 			cxt->drv_data.status = status;
 		}
 	}
@@ -93,7 +104,11 @@ static void step_c_work_func(struct work_struct *work)
 	/* report data to input device */
 	/*STEP_C_LOG("step_c data[%d]\n", cxt->drv_data.counter);*/
 
+#if defined(CONFIG_C8_NRF_CONTROL)
+	step_c_data_report(cxt->drv_data.counter, cxt->drv_data.dist, cxt->drv_data.cal, cxt->drv_data.status);
+#else
 	step_c_data_report(cxt->drv_data.counter, cxt->drv_data.status);
+#endif
 	floor_c_data_report(cxt->drv_data.floor_counter, cxt->drv_data.floor_c_status);
 
 step_c_loop:
@@ -901,7 +916,11 @@ int step_c_register_control_path(struct step_c_control_path *ctl)
 	return 0;
 }
 
+#if defined(CONFIG_C8_NRF_CONTROL)
+int step_c_data_report(uint32_t new_counter, uint32_t dist, uint32_t cal, int status)
+#else
 int step_c_data_report(uint32_t new_counter, int status)
+#endif
 {
 	int err = 0;
 	struct sensor_event event;
@@ -911,6 +930,10 @@ int step_c_data_report(uint32_t new_counter, int status)
 		event.flush_action = DATA_ACTION;
 		event.handle = ID_STEP_COUNTER;
 		event.word[0] = new_counter;
+#if defined(CONFIG_C8_NRF_CONTROL)
+		event.word[1] = dist;
+		event.word[2] = cal;
+#endif
 		last_step_counter = new_counter;
 		err = step_input_event_irqsafe(step_c_context_obj->mdev.minor, &event);
 		if (err < 0)
