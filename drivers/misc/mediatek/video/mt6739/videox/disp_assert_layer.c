@@ -188,7 +188,7 @@ enum DAL_STATUS DAL_Dynamic_Change_FB_Layer(unsigned int isAEEEnabled)
 	return DAL_STATUS_OK;
 }
 
-static int show_dal_layer(int enable)
+static int show_dal_layer(int enable, int alpha)
 {
 	struct disp_session_input_config *session_input;
 	struct disp_input_config *input;
@@ -214,8 +214,15 @@ static int show_dal_layer(int enable)
 	input->tgt_offset_y = 0;
 	input->tgt_width = DAL_WIDTH;
 	input->tgt_height = DAL_HEIGHT;
-	input->alpha = 0x80;
-	input->alpha_enable = 1;
+
+	if (alpha) {
+		input->alpha = 0xFF;
+		input->alpha_enable = 0;
+	} else {
+		input->alpha = 0x80;
+		input->alpha_enable = 1;
+	}
+
 	input->next_buff_idx = -1;
 	input->src_pitch = DAL_WIDTH;
 	input->src_fmt = DAL_FORMAT;
@@ -247,12 +254,12 @@ enum DAL_STATUS DAL_Clean(void)
 		goto End;
 	}
 	ctxt->screen_color = 0;
-	DAL_SetScreenColor(DAL_COLOR_RED);
+	DAL_SetScreenColor(DAL_COLOR_BLACK);
 
 
 	/* TODO: if dal_shown=false, and 3D enabled, mtkfb may disable UI layer, please modify 3D driver */
 	if (isAEEEnabled == 1) {
-		show_dal_layer(0);
+		show_dal_layer(0, 0);
 		/* DAL disable, switch UI layer to default layer 3 */
 		DISPERR("[DDP] isAEEEnabled from 1 to 0, %d\n", dal_clean_cnt++);
 		isAEEEnabled = 0;
@@ -305,7 +312,7 @@ enum DAL_STATUS DAL_Printf(const char *fmt, ...)
 		isAEEEnabled = 1;
 		DAL_Dynamic_Change_FB_Layer(isAEEEnabled); /* default_ui_layer config to changed_ui_layer */
 
-		show_dal_layer(1);
+		show_dal_layer(1, 0);
 	}
 	va_start(args, fmt);
 	i = vsprintf(dal_print_buffer, fmt, args);
@@ -336,6 +343,38 @@ EXPORT_SYMBOL(DAL_Printf);
 enum DAL_STATUS DAL_OnDispPowerOn(void)
 {
 	return DAL_STATUS_OK;
+}
+
+int DAL_Clock(char *layerVA)
+{
+	struct MFC_CONTEXT *ctxt;
+	int ret = 0, offset = 0;
+
+	DISPFUNC();
+
+	if (!mfc_handle) {
+		return DAL_STATUS_NOT_READY;
+	}
+
+	DAL_LOCK();
+
+	isAEEEnabled = 1;
+	DAL_Dynamic_Change_FB_Layer(isAEEEnabled);
+	show_dal_layer(1, 1);
+
+	ctxt = mfc_handle;
+	offset = MFC_Get_Cursor_Offset(mfc_handle);
+	memcpy(ctxt->fb_addr + offset, layerVA, DAL_GetLayerSize() - offset);
+
+	if (!dal_shown) {
+		dal_shown = true;
+	}
+
+	ret = primary_display_trigger(0, NULL, 0);
+
+	DAL_UNLOCK();
+
+	return ret;
 }
 
 /* ########################################################################## */
