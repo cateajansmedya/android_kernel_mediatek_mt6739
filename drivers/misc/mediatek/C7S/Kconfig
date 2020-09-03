@@ -1,3 +1,9 @@
+config CPU_UNDERVOLT
+  bool "CPU undervolt"
+  default n
+  help
+    Select Y here to enable CPU underclock/undervolt.
+
 config AMBIENT_DISPLAY
   bool "Ambient display driver"
   default n
