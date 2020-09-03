@@ -18,7 +18,11 @@ charger: charger {
 	enable_pe_3;
 
 	/* common */
+#if (CONFIG_CHARGER_CUTOFF)
+	battery_cv = <4200000>;
+#else
 	battery_cv = <4350000>;
+#endif
 	max_charger_voltage = <6500000>;
 
 	/* charging current */

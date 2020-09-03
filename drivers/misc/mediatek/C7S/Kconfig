@@ -1,3 +1,9 @@
+config CHARGER_CUTOFF
+  bool "Charger cut-off"
+  default n
+  help
+    Select Y here to enable charger cut-off at 4.2V.
+
 config CPU_UNDERVOLT
   bool "CPU undervolt"
   default n
